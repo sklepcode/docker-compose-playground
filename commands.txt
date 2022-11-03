@@ -1,0 +1,3 @@
+docker run --name react -p 3000:3000 -it -v $(pwd)/src:/app/src -d client
+docker run --name express -p 8000:8000 -v $(pwd)/src:/app/src -d --network net api
+docker run --name mongodb --network net -d -v data:/data/db mongo
