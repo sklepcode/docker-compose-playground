@@ -28,6 +28,19 @@ services:
       - ./env/backend.env
     depends_on:
       - mongodb
+  frontend:
+    container_name: frontend
+    networks:
+      - kube
+    build: ./frontend
+    volumes:
+      - ./frontend/src:/app/src
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
 
 volumes:
   mongodbdata:
