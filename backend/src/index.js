@@ -45,10 +45,12 @@ app.delete("/todos/:id", async (req, res) => {
 });
 
 mongoose.connect(
-  "mongodb://mongodb:27017/todos",
+  `mongodb://mongodb:27017/${process.env.MONGODB_DB}?authSource=admin`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    user: process.env.MONGODB_USER,
+    pass: process.env.MONGODB_PASSWORD,
   },
   (err) => {
     if (err) {

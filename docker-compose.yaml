@@ -1,13 +1,33 @@
 version: "3.8"
 
+networks:
+  kube:
+    driver: bridge
+    name: kube
+
 services:
   mongodb:
     container_name: mongodb
+    networks:
+      - kube
     image: mongo
     volumes:
       - mongodbdata:/data/db
     env_file:
       - ./env/mongo.env
+  backend:
+    container_name: backend
+    networks:
+      - kube
+    build: ./backend
+    volumes:
+      - ./backend/src:/app/src
+    ports:
+      - 8000:8000
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
 
 volumes:
   mongodbdata:
